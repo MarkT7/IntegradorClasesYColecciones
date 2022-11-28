@@ -20,12 +20,32 @@ namespace Entidades
     public class Paciente:Persona
     {
         public int NroHistoriaClinica { get; set; }
+        public DateTime Nacimiento { get; }
+        public int Edad { get; }
+        public Paciente(int nroHistoriaClinica, DateTime nacimiento)
+        {
+            NroHistoriaClinica = nroHistoriaClinica;
+            Nacimiento = nacimiento;
+            Edad = Ayudantes.UtilidadesFechas.CalcularEdad(Nacimiento);
+        }
+
+        public Paciente(string nombre, DateTime nacimiento)
+        {
+            Nombre = nombre;
+            Nacimiento = nacimiento;
+        }
     }
 
     public class Medico:Persona
     {
         public string Especialidad { get; set; }
         public int Matricula { get; set; }
+
+        public Medico(string especialidad, string nombre)
+        {
+            Especialidad = especialidad;
+            Nombre = nombre;
+        }
     }
 
     public class Enfermero:Persona
@@ -36,21 +56,29 @@ namespace Entidades
     public class Director : Medico
     {
         public string PostGrado { get; set; }
+
+        public Director(string especialidad, string nombre):base(especialidad, nombre)
+        {
+            
+        }
     }
 
-    public abstract class Lugar
+    public class Habitacion
     {
         public int Id { get; set; }
-    }
-
-    public class Habitacion : Lugar
-    {
         public int Numero { get; set; }
         public string Estado { get; set; }
+
+        public Habitacion(int id, string estado)
+        {
+            Id = id;
+            Estado = estado;
+        }
     }
 
-    public class Clinica : Lugar
+    public class Clinica
     {
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public string Domicilio { get; set; }
         public int Telefono { get; set; }
